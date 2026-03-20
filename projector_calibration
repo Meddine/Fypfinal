@@ -1,0 +1,32 @@
+import cv2
+import numpy as np
+import time
+
+#Part1
+camera_matrix = np.load("camera_matrix.npy")
+dist_coeffs = np.load("dist_coeffs.npy")
+
+#set up video capture
+cap = cv2.VideoCapture(0)
+
+#create a black 1920x1200 image with a green rectangle frame of 20 pixels
+width =1920
+height = 1200
+
+calibration_image = np.zeros((height, width, 3), dtype=np.uint8)
+calibration_image = cv2.rectangle(calibration_image, (20,20), (width-20, height-20), (0,255,0), 20)
+
+#cv2.imshow("Calibration Image", calibration_image)
+#cv2.waitKey(0)
+
+
+cv2.namedWindow("Calibration Frame", cv2.WND_PROP_FULLSCREEN)
+cv2.setWindowProperty("Calibration Frame", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+cv2.imshow("Calibration Frame", calibration_image)
+cv2.waitKey(0)
+time.sleep(1)
+success, image = cap.read()
+
+#shoe the capture image
+cv2.imshow("Captured Image", image)
+cv2.waitKey(0)
